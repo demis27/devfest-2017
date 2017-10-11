@@ -10,6 +10,9 @@ import org.demis27.devfest.comic.R
 import org.demis27.devfest.comic.model.ComicBook
 import org.demis27.devfest.comic.model.ComicBookDAO
 
+/**
+ *
+ */
 class ComicBookAdapter(data: ComicBookDAO, context: Context) : BaseAdapter() {
 
     val mInflater: LayoutInflater

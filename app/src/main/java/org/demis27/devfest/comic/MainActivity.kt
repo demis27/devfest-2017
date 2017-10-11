@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.demis27.devfest.comic.adapter.ComicBookAdapter
@@ -16,7 +15,7 @@ import android.widget.ViewFlipper
 
 class MainActivity : AppCompatActivity() {
 
-    var selectedItem: Int = -1
+    var currentComicBookPosition: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +23,10 @@ class MainActivity : AppCompatActivity() {
 
 
         val comicBookDAO = ComicBookDAO()
-        init(comicBookDAO)
+        addElements(comicBookDAO)
 
         this.list.adapter = ComicBookAdapter(data = comicBookDAO, context = this)
+        
         val viewFlipper = findViewById(R.id.flip) as ViewFlipper
         this.list.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, id ->
             val item = parent.getItemAtPosition(position) as ComicBook
@@ -37,19 +37,19 @@ class MainActivity : AppCompatActivity() {
             artist_firstname.setText(item.artist?.firstName)
             artist_lastname.setText(item.artist?.lastName)
 
-            this.selectedItem = position
+            this.currentComicBookPosition = position
 
             viewFlipper.displayedChild = 1
 
         }
 
         new_button.setOnClickListener {
-            this.selectedItem = -1
+            this.currentComicBookPosition = -1
             viewFlipper.displayedChild = 1
         }
 
         save_button.setOnClickListener {
-            if (this.selectedItem == -1) {
+            if (this.currentComicBookPosition == -1) {
                 val comicBook = ComicBook()
                 comicBook.title = comic_title.text.toString()
                 comicBook.number = comic_issue.inputType
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 comicBook.artist = artist;
                 comicBookDAO.create(comicBook)
             } else {
-                val comicBook = comicBookDAO.get(this.selectedItem)
+                val comicBook = comicBookDAO.get(this.currentComicBookPosition)
                 comicBook.title = comic_title.text.toString()
                 comicBook.number = comic_issue.text.toString().toInt()
                 comicBook.writer?.firstName = writer_firstname.text.toString()
@@ -70,18 +70,18 @@ class MainActivity : AppCompatActivity() {
                 this.list.invalidateViews()
 //                this.list.adapter.
             }
-            this.selectedItem = -1
+            this.currentComicBookPosition = -1
             viewFlipper.displayedChild = 0
         }
 
         cancel_button.setOnClickListener {
-            this.selectedItem = -1
+            this.currentComicBookPosition = -1
             viewFlipper.displayedChild = 0
         }
 
         delete_button.setOnClickListener {
-            comicBookDAO.delete(comicBookDAO.get(this.selectedItem))
-            this.selectedItem = -1
+            comicBookDAO.delete(comicBookDAO.get(this.currentComicBookPosition))
+            this.currentComicBookPosition = -1
             viewFlipper.displayedChild = 0
         }
 
@@ -90,26 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.action_settings) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    fun getLastNumber(dataset: Array<Int>): Int {
-        return dataset.last()
-    }
-
-
-    fun init(repository: ComicBookDAO) {
+    fun addElements(repository: ComicBookDAO) {
         val comicBook = ComicBook()
         comicBook.title = "Uncanny X-Men"
         comicBook.number = 1
