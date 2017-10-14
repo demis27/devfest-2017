@@ -1,8 +1,8 @@
 package org.demis27.devfest.comic.model
 
 
-class Person(var firstName: String, var lastName: String) {
-
-    var id: Int = -1
-
+class Person(val firstName: String, val lastName: String) {
+    override fun toString(): String {
+        return "Person(firstName='$firstName', lastName='$lastName')"
+    }
 }
