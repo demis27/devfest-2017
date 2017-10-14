@@ -108,6 +108,4 @@ class MainActivity : AppCompatActivity() {
         comicBookDAO.create(comicBook2)
         comicBookDAO.create(comicBook94)
     }
-
-
 }
