@@ -6,6 +6,8 @@ interface ComicBookDAOInterface {
 
     fun get(id: Int): ComicBook?
 
+    fun getElementAt(id: Int): ComicBook?
+
     fun getAll(): Collection<ComicBook>
 
     fun delete(comicBook: ComicBook)

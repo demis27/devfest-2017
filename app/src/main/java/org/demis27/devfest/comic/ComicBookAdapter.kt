@@ -22,18 +22,18 @@ class ComicBookAdapter(var data: ComicBookDAO, context: Context) : BaseAdapter()
         view = mInflater.inflate(R.layout.row_item, parent, false)
         vh = ListRowHolder(view)
         view?.tag = vh
-        vh.title.text = data.get(id = position)?.title
-        vh.issue.text = data.get(id = position)?.number.toString()
+        vh.title.text = data.getElementAt(position)?.title
+        vh.issue.text = data.getElementAt(position)?.number.toString()
 
         return view
     }
 
     override fun getItem(p0: Int): ComicBook {
-        return data.get(p0) as ComicBook
+        return data.getElementAt(p0) as ComicBook
     }
 
     override fun getItemId(p0: Int): Long {
-        return p0.toLong()
+        return data.getElementAt(p0)!!.id.toLong()
     }
 
     override fun getCount(): Int {
