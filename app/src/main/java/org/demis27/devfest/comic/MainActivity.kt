@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         addElements(comicBookDAO)
 
         this.list.adapter = ComicBookAdapter(data = comicBookDAO, context = this)
-        
+
         val viewFlipper = findViewById(R.id.flip) as ViewFlipper
         this.list.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, id ->
             val item = parent.getItemAtPosition(position) as ComicBook
