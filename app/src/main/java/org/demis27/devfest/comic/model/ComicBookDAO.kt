@@ -10,10 +10,15 @@ class ComicBookDAO: ComicBookDAOInterface {
         return comicBook
     }
 
-    override fun get(id: Int): ComicBook? {
+    override fun getElementAt(position: Int): ComicBook? {
+        return comics[position]
+    }
+
+    override operator fun get(id: Int): ComicBook? {
         for (comic: ComicBook in comics) {
-            if (comic.id == id)
+            if (comic.id.equals(id)) {
                 return comic
+            }
         }
         return null
     }
