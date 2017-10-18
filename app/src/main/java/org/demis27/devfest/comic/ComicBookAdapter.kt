@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.LinearLayout
 import android.widget.TextView
+import kotlinx.android.synthetic.main.row_item.view.*
 import org.demis27.devfest.comic.model.ComicBook
 import org.demis27.devfest.comic.model.ComicBookDAO
 
@@ -47,8 +49,8 @@ class ListRowHolder(row: View?) {
     val issue: TextView
 
     init {
-        this.title = row?.findViewById(R.id.title) as TextView
-        this.issue = row?.findViewById(R.id.issue) as TextView
+        this.title = (row as LinearLayout)?.title as TextView
+        this.issue = (row as LinearLayout)?.issue as TextView
     }
 
 }
