@@ -4,8 +4,10 @@ class ComicBookDAO: ComicBookDAOInterface {
 
     var comics: MutableList<ComicBook> = mutableListOf()
 
+    var sequence: Int = 0;
+
     override fun create(comicBook: ComicBook): ComicBook {
-        comicBook.id = comics.size
+        comicBook.id = sequence++
         comics.add(comicBook)
         return comicBook
     }
